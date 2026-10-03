@@ -4,7 +4,7 @@ One SP1 guest interprets one Fibonacci function with Wasmi 2.0.0. Four builds ch
 
 ## The guest
 
-The module is `wasm/fib.wat`. It exports `fib`. The guest calls that export with input 10000 and commits the wrapping `i64`. The host checks the committed value against the same recurrence. Every row returned `15574651946073070043`.
+Wasmi is [wasmi-labs/wasmi](https://github.com/wasmi-labs/wasmi). The module is `wasm/fib.wat`. It exports `fib`. The guest calls that export with input 10000 and commits the wrapping `i64`. The host checks the committed value against the same recurrence. Every row returned `15574651946073070043`.
 
 The guest target is `riscv64im-succinct-zkvm-elf` on SP1 6.8.1. The release profile uses opt-level 3 and one codegen unit. `auto-dispatch` stays enabled, so a riscv64 build at that opt-level can use tail calls. `portable-dispatch` turns that path off and forces the loop backend. `indirect-dispatch` selects the indirect form of the tail-call backend.
 

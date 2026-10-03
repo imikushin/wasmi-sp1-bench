@@ -2,6 +2,8 @@
 
 Measures which Wasmi 2.0.0 feature pair uses the fewest SP1 instruction cycles to interpret one Fibonacci WebAssembly module. The host executes the guest and reads `ExecutionReport::total_instruction_count`. It does not generate a proof.
 
+Wasmi is the interpreter under test. The project is [wasmi-labs/wasmi](https://github.com/wasmi-labs/wasmi).
+
 ## Run the benchmark
 
 You need `protoc`, `g++`, and the SP1 6.8.1 toolchain. `host/rust-toolchain.toml` and `guest/rust-toolchain.toml` pin channel `1.96`. The workspace `rust-toolchain.toml` has the same pin, because `./bench.sh` starts `cargo` at the repo root and rustup does not look inside `host/`. SP1 6.8.1's succinct compiler is rustc 1.96.0-dev. `cargo prove` compiles the guest with that succinct compiler, because only it provides `riscv64im-succinct-zkvm-elf`. `cargo prove build` defaults to that target. The 6.8.1 toolchain still contains a riscv32 target. This bench uses the default riscv64 execute path. `bench.sh` points `CXX` at `g++` because `sp1-core-machine` compiles a C++ file.
@@ -33,3 +35,7 @@ Each build uses its own `CARGO_TARGET_DIR` under `target/guest/ind-<0|1>-port-<0
 ## Program
 
 `wasm/fib.wat` is an iterative Fibonacci function. The bench compiles it once with `wat` 1.228.0 and embeds `guest/fib.wasm`. The guest calls `fib(10000)` and commits the wrapping `i64` result plus the Wasmi version from the guest lockfile. The host prints that result and checks it against the same wrapping recurrence.
+
+## License
+
+This repository is under the MIT License. See `LICENSE`.
