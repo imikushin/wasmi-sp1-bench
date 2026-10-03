@@ -1,0 +1,31 @@
+[package]
+name = "wasmi-guest"
+version = "0.1.0"
+edition = "2021"
+publish = false
+rust-version = "1.88"
+
+# Own workspace so this release profile is not ignored in favor of the host
+# workspace, and so host feature resolution cannot unify with these flags.
+[workspace]
+
+[dependencies]
+sp1-zkvm = "=6.8.1"
+wasmi = { version = "=2.0.0", default-features = false, features = ["validate"] }
+
+[features]
+default = ["auto-dispatch"]
+# Upstream default. On riscv64 at opt-level >= 2 this selects tail-call dispatch.
+# `portable-dispatch` overrides it. See wasmi `dispatch/mod.rs`.
+auto-dispatch = ["wasmi/auto-dispatch"]
+indirect-dispatch = ["wasmi/indirect-dispatch"]
+portable-dispatch = ["wasmi/portable-dispatch"]
+
+# opt-level 3 and a single codegen unit are what make LLVM emit the sibling
+# calls Wasmi's tail-call dispatch relies on (`wasmi_use_tail_calls`).
+[profile.release]
+opt-level = 3
+codegen-units = 1
+lto = false
+panic = "abort"
+overflow-checks = false

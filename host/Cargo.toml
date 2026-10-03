@@ -1,0 +1,14 @@
+[package]
+name = "host"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "wasmi-sp1-bench"
+path = "src/main.rs"
+
+[dependencies]
+sp1-sdk = { version = "=6.8.1", features = ["blocking"] }
+sp1-core-executor = "=6.8.1"
+wat = "=1.228.0"
