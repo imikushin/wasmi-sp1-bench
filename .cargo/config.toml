@@ -1,0 +1,2 @@
+[alias]
+wasmi-bench = "run --release -p host --bin wasmi-sp1-bench"

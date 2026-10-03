@@ -1,0 +1,6 @@
+/target
+/artifacts
+/agent-tools
+/guest/fib.wasm
+**/*.rs.bk
+.sp1-network-key
